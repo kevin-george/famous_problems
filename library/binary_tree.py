@@ -1,33 +1,48 @@
 class BinaryTree:
     def __init__(self, value):
-        self.value = value
-        self.left_child = None
-        self.right_child = None
+        self.__value = value
+        self.__left_child = None
+        self.__right_child = None
+        self.__height = None
 
-    def insert_left(self, value):
-        if self.left_child is None:
-            self.left_child = BinaryTree(value)
+    @property
+    def left_child(self):
+        return self.__left_child
+
+    @left_child.setter
+    def left_child(self, value):
+        if self.__left_child is None:
+            self.__left_child = BinaryTree(value)
         else:
             new = BinaryTree(value)
-            new.left_child = self.left_child
-            self.left_child = new
+            new.left_child = self.__left_child
+            self.__left_child = new
 
-    def insert_right(self, value):
-        if self.right_child is None:
-            self.right_child = BinaryTree(value)
+    @property
+    def right_child(self):
+        return self.__right_child
+
+    @right_child.setter
+    def right_child(self, value):
+        if self.__right_child is None:
+            self.__right_child = BinaryTree(value)
         else:
             new = BinaryTree(value)
-            new.right_child = self.right_child
-            self.right_child = new
+            new.right_child = self.__right_child
+            self.__right_child = new
 
-    def get_left_child(self):
-        return self.left_child
+    @property
+    def value(self):
+        return self.__value
 
-    def get_right_child(self):
-        return self.right_child
+    @value.setter
+    def value(self, value):
+        self.__value = value
 
-    def get_value(self):
-        return self.value
+    @property
+    def height(self):
+        return self.__height
 
-    def set_value(self, value):
-        self.value = value
+    @height.setter
+    def height(self, height):
+        self.__height = height
