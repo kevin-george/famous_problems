@@ -1,23 +1,47 @@
+"""
+The Vertex maintains a list of the ids of the vertexes
+that are its neighbors
+"""
 class Vertex:
     def __init__(self, vertex_id):
-        self.id = vertex_id
-        self.neighbors = {}
-
-    def add_neighbor(self, vertex, cost):
-        self.neighbors[vertex] = cost
+        self.__id = vertex_id
+        self.__neighbors = {}
+        self.__visited = False
 
     def get_neighbors(self):
-        return self.neighbors.keys()
+        return self.__neighbors.keys()
 
-    def get_id(self):
-        return self.id
+    def add_neighbor(self, vertex_id, cost):
+        self.__neighbors[vertex_id] = cost
 
-    def get_cost(self, vertex):
-        return self.neighbors[vertex]
+    @property
+    def id(self):
+        return self.__id
 
-    def __str__(self):
-        return "Vertex " + self.id + " connected to " + " ".join([x.id for x in self.neighbors])
+    @id.setter
+    def id(self, value):
+        self.__id = value
 
+    def get_cost(self, vertex_id):
+        return self.__neighbors[vertex_id]
+
+    def set_cost(self, vertex_id, cost):
+        if vertex_id in self.__neighbors:
+            self.__neighbors[vertex] = cost
+        else:
+            raise ValueError("{} is not a neighbor".format(vertex_id))
+
+    @property
+    def visited(self):
+        return self.__visited
+
+    @visited.setter
+    def visited(self, value):
+        self.__visited = value
+
+"""
+The Graph maintains a list of Vertex instances in it
+"""
 class Graph:
     def __init__(self):
         self.vertex_list = {}
@@ -30,7 +54,11 @@ class Graph:
             self.add_vertex(from_vertex_id)
         if to_vertex_id not in self.vertex_list:
             self.add_vertex(to_vertex_id)
-        self.vertex_list[from_vertex_id].add_neighbor(self.vertex_list[to_vertex_id], cost)
+        self.vertex_list[from_vertex_id].add_neighbor(to_vertex_id, cost)
+
+    def get_vertex(self, vertex_id):
+        if vertex_id in self.vertex_list:
+            return self.vertex_list[vertex_id]
 
     def get_vertices(self):
         return self.vertex_list
