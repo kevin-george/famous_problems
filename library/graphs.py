@@ -6,7 +6,8 @@ class Vertex:
     def __init__(self, vertex_id):
         self.__id = vertex_id
         self.__neighbors = {}
-        self.__visited = False
+        self.__discovered = False
+        self.__processed = False
 
     def get_neighbors(self):
         return self.__neighbors.keys()
@@ -32,12 +33,20 @@ class Vertex:
             raise ValueError("{} is not a neighbor".format(vertex_id))
 
     @property
-    def visited(self):
-        return self.__visited
+    def discovered(self):
+        return self.__discovered
 
-    @visited.setter
-    def visited(self, value):
-        self.__visited = value
+    @discovered.setter
+    def discovered(self, value):
+        self.__discovered = value
+
+    @property
+    def processed(self):
+        return self.__processed
+
+    @processed.setter
+    def processed(self, value):
+        self.__processed = value
 
 """
 The Graph maintains a list of Vertex instances in it
@@ -65,3 +74,9 @@ class Graph:
 
     def __contains__(self, vertex_id):
         return vertex_id in self.vertex_list
+
+    def reset(self):
+        vertices = self.vertex_list.values()
+        for vert in vertices:
+            vert.processed = False
+            vert.discovered = False

@@ -8,18 +8,20 @@ Using breadth first search, assuming branching factor for
 graph is low so space complexity is not an issue
 """
 def does_route_exist(g, from_vert_id, to_vert_id):
+    g.reset()
     q = Queue()
     q.enqueue(from_vert_id)
     while not(q.is_empty()):
         vert_id = q.dequeue()
         vert = g.get_vertex(vert_id)
-        if not(vert.visited):
+        if not(vert.discovered):
+            vert.discovered = True
             nbrs = vert.get_neighbors()
             for nbr in nbrs:
                 if nbr == to_vert_id:
                     return True
                 q.enqueue(nbr)
-        vert.visited = True
+        vert.processed = True
     return False
 
 g = Graph()
